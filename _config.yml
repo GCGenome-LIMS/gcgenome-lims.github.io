@@ -1,1 +1,6 @@
 theme: jekyll-theme-slate
+locale: ko-KR
+title: GCGenome LIMS team tech blog
+title_separator: ""
+name: GCGenome LIMS
+baseurl: "https://gcgenome-lims.github.io/"
