@@ -6,4 +6,4 @@ name                     : "GCGenome LIMS"
 description              : ""
 url                      : ""
 baseurl                  : "https://gcgenome-lims.github.io/"
-theme: jekyll-theme-minimal
+theme: jekyll-theme-slate
