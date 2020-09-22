@@ -9,7 +9,7 @@
 Markdown 은 컨텐츠 작성을 위해 사용하는 사용하기 쉽고 간편한 구문입니다. 이것을 사용하면 다음과 같은 일을 할 수 있습니다:
 
 ```markdown
-강조된 코드 블록
+Syntax highlighted code block
 
 # Header 1
 ## Header 2
