@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body class="{{ page.layout | append: '-template' }}">
-{% include header.html %}
-<div id="wrapper">
-    {{ content }}
-    <div class="clearfix"></div>
-    <a href="#" id="back-to-top"></a>
-</div>
-{% include footer.html %}
-</body>
+    <head>
+    </head>
+    <body class="{{ page.layout | append: '-template' }}">
+        {% include header.html %}
+    <div id="wrapper">
+        {{ content }}
+        <a href="#" id="back-to-top"></a>
+    </div>
+        {% include footer.html %}
+    </body>
 </html>
