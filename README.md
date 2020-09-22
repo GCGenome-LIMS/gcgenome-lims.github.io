@@ -1,15 +1,15 @@
-## Welcome to GitHub Pages
+## GCGenome LIMS team tech blog
 
-You can use the [editor on GitHub](https://github.com/GCGenome-LIMS/gcgenome-lims.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+[editor on GitHub](https://github.com/GCGenome-LIMS/gcgenome-lims.github.io/edit/master/README.md)를 사용하여 웹사이트 컨텐츠를 Markdown 파일로 관리하고 프리뷰할 수 있습니다.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+이 저장소에 커밋할 때마다, GitHub 페이지는 [Jekyll](https://jekyllrb.com/)를 실행하여 Markdown 파일의 컨텐츠를 재빌드합니다.
 
 ### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Markdown 은 컨텐츠 작성을 위해 사용하는 사용하기 쉽고 간편한 구문입니다. 이것을 사용하면 다음과 같은 일을 할 수 있습니다:
 
 ```markdown
-Syntax highlighted code block
+강조된 코드 블록
 
 # Header 1
 ## Header 2
@@ -26,12 +26,12 @@ Syntax highlighted code block
 [Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/) 를 참조하세요.
 
 ### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/GCGenome-LIMS/gcgenome-lims.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+이 페이지는 [repository settings](https://github.com/GCGenome-LIMS/gcgenome-lims.github.io/settings)에서 선택한 Jekyll 테마의 레이아웃과 스타일을 사용합니다. 이 테마의 이름은 `_config.yml` 설정 파일에 저장됩니다.
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+페이지에 문제가 있으면 [documentation](https://docs.github.com/categories/github-pages-basics/) 또는 [contact support](https://github.com/contact) 를 통해 지원받을 수 있습니다.
