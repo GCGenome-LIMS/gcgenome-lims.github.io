@@ -1,2 +1,4 @@
 theme: jekyll-theme-slate
-title: "GCGenome LIMS team tech blog"
+title: "GCGenome LIMS tech"
+locale: "ko-KR"
+name: "GCGenome LIMS team"
