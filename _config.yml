@@ -37,7 +37,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-exclude: [README.md, Gemfile, Gemfile.lock]
+exclude: [Gemfile, Gemfile.lock]
 keep_files: [assets, files]
 github: [metadata]
 author: sayaya@gccorp.com
