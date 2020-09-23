@@ -1,46 +1,16 @@
-theme: jekyll-theme-slate
-title: GCGenome LIMS tech
+theme: minima
 locale: ko-KR
 timezone: Asia/Seoul
-name: GCGenome LIMS team
-permalink: /:year/:month/:day/:title/
-excerpt_separator: <!--more-->
-markdown: kramdown
-krandown:
-  input: GFM
-  highlighter: rouge
+title: GCGenome LIMS Tech
+email: sayaya@gccorp.com
+description: ''
+baseurl: ''
+url: ''
+twitter_username: ''
+github_username: ''
 plugins:
+  - jekyll-feed
   - jekyll-paginate
+permalink: /:year/:month/:day/:title/
 paginate: 5
 paginate_path: '/page/:num/'
-collections:
-  authors:
-    output: true
-    permalink: /authors/:path/
-  tags:
-    output: true
-    permalink: /tags/:path/
-defaults:
-  - scope:
-      path: ''
-      type: posts
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-  - scope:
-      path: '_pages'
-      type: pages
-    values:
-      layout: single
-      author_profile: true
-exclude: [README.md, Gemfile, Gemfile.lock]
-keep_files: [assets, files]
-github: [metadata]
-author: sayaya@gccorp.com
-asset_url: /assets
-github_url:
-  username: GCGenome-LIMS-manager
