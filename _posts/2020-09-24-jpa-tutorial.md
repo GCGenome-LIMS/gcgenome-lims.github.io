@@ -53,13 +53,90 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 <br/><br/><br/>
+
+설정이 완료된 다음 프로젝트를 기동하면, 아래와 같이 Hibernate ORM이 로딩되고 PostgreSQL JDBC 드라이버를 사용하여 데이터베이스와 정상 연결되어 초기화에 성공했다는 메시지가 출력됩니다.
+![img0](/assets/img/2020-09-24-jpa-tutorial-img0.png)
+
 # 데이터 테이블
 튜토리얼에서 사용할 데이터에 대한 ERD는 다음과 같이 구성해 보았습니다.
 
+![img1](/assets/img/2020-09-24-jpa-tutorial-img1.png)
+
 institution 테이블과 person 테이블이 있고, 각각 적절한 id가 부여되어 있으며, person 테이블의 institution 필드가 institution 테이블의 id로 FK가 연결된 One to Many 구조입니다.
+다음 쿼리를 사용하여 테이블을 구성할 수 있습니다.
+```
+CREATE TABLE public.institution
+(
+    id uuid NOT NULL,
+    name character varying(64) COLLATE pg_catalog."default",
+    CONSTRAINT "Institution_pkey" PRIMARY KEY (id)
+);
+CREATE TABLE public.person
+(
+    id character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(64) COLLATE pg_catalog."default",
+    email character varying(64) COLLATE pg_catalog."default",
+    institution uuid,
+    CONSTRAINT "person_pkey" PRIMARY KEY (id),
+    CONSTRAINT fkq7tgo7kig3jfs8un8mhsh97mp FOREIGN KEY (institution)
+        REFERENCES public.institution (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+```
 <br/><br/><br/>
 # 테이블 매핑
+아래와 같이 각각의 테이블과 1:1 대응되는 2개의 클래스를 생성합니다.
+```
+package com.greencross.entity;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
+
+@Entity
+@Table(name="Institution")
+@Data
+@Accessors(fluent = true)
+public class Institution {
+	@Id
+	private UUID id;
+	@Column
+	private String name;
+}
+```
+<br/>
+```
+package com.greencross.entity;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="Person")
+@Data
+@Accessors(fluent = true)
+public class Person {
+	@Id
+	private String id;
+	@Column
+	private String name;
+	@Column
+	private String email;
+	@ManyToOne
+	@JoinColumn(name="institution", referencedColumnName="id")
+	private Institution institution;
+}
+
+@ManyToOne과 @JoinColumn Annotation을 사용하여 Person 테이블의 institution 필드가 Institution 클래스의 id 필드와 FK 관계임을 표시하였습니다.
+```
 
 <br/><br/><br/>
 # 삽입, 삭제
