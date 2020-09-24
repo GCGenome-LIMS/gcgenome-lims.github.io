@@ -87,30 +87,7 @@ CREATE TABLE public.person
 <br/><br/><br/>
 # 테이블 매핑
 아래와 같이 각각의 테이블과 1:1 대응되는 2개의 클래스를 생성합니다.
-```
-package com.greencross.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.UUID;
-
-@Entity
-@Table(name="Institution")
-@Data
-@Accessors(fluent = true)
-public class Institution {
-	@Id
-	private UUID id;
-	@Column
-	private String name;
-}
-```
-<br/>
 ```
 package com.greencross.entity;
 
@@ -134,9 +111,182 @@ public class Person {
 	@JoinColumn(name="institution", referencedColumnName="id")
 	private Institution institution;
 }
-
-@ManyToOne과 @JoinColumn Annotation을 사용하여 Person 테이블의 institution 필드가 Institution 클래스의 id 필드와 FK 관계임을 표시하였습니다.
 ```
+Person 클래스에서 @ManyToOne과 @JoinColumn Annotation을 사용하여 Person 테이블의 institution 필드가 Institution 클래스의 id 필드와 FK 관계임을 표시하였습니다.
+lombok 라이브러리를 사용하여 setter와 getter는 자동 생성되도록 하였습니다.
+
+```
+package com.greencross.entity;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
+
+@Entity
+@Table(name="Institution")
+@Data
+@Accessors(fluent = true)
+public class Institution {
+	@Id
+	private UUID id;
+	@Column
+	private String name;
+	@OneToMany(mappedBy="institution")
+    @ToString.Exclude
+	private List<Person> persons;
+}
+```
+Institution 클래스에서는 Person 클래스와 반대로 @OneToMany Annotation을 사용하였습니다.
+하나의 Institution은 여러 Person에 대응되기 때문에, 필드는 컬렉션 타입으로 정의됩니다. 
+@ToString.Exclude 는 ToString으로 출력시 Person과 Institution 사이의 순환참조를 방지하기 위해 추가하였습니다.
 
 <br/><br/><br/>
 # 삽입, 삭제
+삽입과 삭제 튜토리얼을 위해 다음과 같이 적절한 클래스를 하나 생성하였습니다.
+```
+package com.greencross;
+
+import com.greencross.entity.Institution;
+import com.greencross.entity.Person;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.util.UUID;
+
+@Component
+public class Tutorial {
+	private final EntityManager em;
+	public Tutorial(EntityManager em) {
+		this.em = em;
+	}
+
+    @Transactional
+	public void insert() {
+		Institution inst = new Institution().id(UUID.fromString("9145dc43-5a6f-468d-9f32-943632d9292e")).name("GC녹십자지놈");
+		inst = em.merge(inst);
+		Person person1 = new Person().id("sayaya1090").name("홍길동").email("sayaya@gccorp.com").institution(inst);
+		em.merge(person1);
+		Person person2 = new Person().id("bigluke").name("성태용").email("sungty@gccorp.com").institution(inst);
+		em.merge(person2);
+	}
+    @Transactional(readOnly=true)
+	public void read() {
+		Institution inst = em.find(Institution.class, UUID.fromString("9145dc43-5a6f-468d-9f32-943632d9292e"));
+		System.out.println(inst);
+		System.out.println(inst.persons());
+	}
+}
+```
+
+insert 함수에서는 Institution 객체 하나와 Person 객체 두개를 생성하고 EntityManager(em)의 merge 함수를 각각 호출하였습니다.
+EntityManager의 merge 함수는 데이터베이스에 저장한 다음 저장된 객체를 리턴하는 함수입니다. 
+@Transactional Annotation은 트랜잭션 범위를 나타냅니다. 함수 시작 전에 트랜잭션이 시작되고, 함수가 끝나면 Commit됩니다. 
+
+다음과 같이 Spring boot 어플리케이션 시동 후 Tutorial의 insert와 read 함수를 한번씩 호출하였습니다.
+```
+package com.greencross;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+
+@SpringBootApplication
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args).close();
+	}
+	private final Tutorial tutorial;
+	public Application(Tutorial tutorial) {
+		this.tutorial = tutorial;
+	}
+	@EventListener(ApplicationReadyEvent.class)
+	public void jpaTutorial() {
+		tutorial.insert();
+		tutorial.read();
+	}
+}
+```
+
+insert 함수가 호출되면, 아래와 같은 쿼리가 생성되어 호출되는 것을 볼 수 있습니다.
+```
+Hibernate: 
+    select
+        institutio0_.id as id1_0_0_,
+        institutio0_.name as name2_0_0_ 
+    from
+        institution institutio0_ 
+    where
+        institutio0_.id=?
+Hibernate: 
+    select
+        person0_.id as id1_1_0_,
+        person0_.email as email2_1_0_,
+        person0_.institution as institut4_1_0_,
+        person0_.name as name3_1_0_ 
+    from
+        person person0_ 
+    where
+        person0_.id=?
+Hibernate: 
+    insert 
+    into
+        institution
+        (name, id) 
+    values
+        (?, ?)
+Hibernate: 
+    insert 
+    into
+        person
+        (email, institution, name, id) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        person
+        (email, institution, name, id) 
+    values
+        (?, ?, ?, ?)
+```
+
+merge는 insert or update로 작동합니다. 현재 아무 데이터가 입력되어있지 않기 때문에, insert 쿼리가 동작하였습니다.
+Institution이 하나, Person 이 둘 입력되었습니다.
+
+read 함수가 호출되면 아래와 같은 쿼리가 실행되고, JPA에 의해 Institution과 Person 객체를 생성하여 출력합니다.
+
+```
+Hibernate: 
+    select
+        institutio0_.id as id1_0_0_,
+        institutio0_.name as name2_0_0_ 
+    from
+        institution institutio0_ 
+    where
+        institutio0_.id=?
+Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈)
+Hibernate: 
+    select
+        persons0_.institution as institut4_1_0_,
+        persons0_.id as id1_1_0_,
+        persons0_.id as id1_1_1_,
+        persons0_.email as email2_1_1_,
+        persons0_.institution as institut4_1_1_,
+        persons0_.name as name3_1_1_ 
+    from
+        person persons0_ 
+    where
+        persons0_.institution=?
+[Person(id=sayaya1090, name=홍길동, email=sayaya@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈)), Person(id=bigluke, name=성태용, email=sungty@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈))]
+```
+
+inst.persons() 함수를 호출하면 매핑된 정보에 따라 person 목록을 select 하는 쿼리가 수행되고 각각의 Row가 Person 클래스에 매핑되는 것을 확인할 수 있습니다.
+
+이상으로 튜토리얼을 마칩니다.
