@@ -11,7 +11,7 @@ tags: jpa,orm
 Requires: Java, Database, Spring Boot, Gradle
 ```
 
-일반적으로 프로그램의 메모리상에 존재하는 데이터는 휘발성입니다. 데이터를 상시적으로 활용할 수 있는 영속성을 부여하려면 파일 또는 데이터베이스를 사용하여 관리합니다. Java에서 객체(**O**bject) 형태로 관리하고 있는 데이터를 관계형 데이터베이스(**R**elational database)에서 관리하려면, 객체 데이터를 DB에서 요구하는 형식에 맞게 변환(**M**apping)하는 과정이 필요합니다. 이것을 ORM(Object-Relational Mapping)이라고 합니다. JPA(Java Persistent API)는 ORM기술에 대한 API 표준 명세입니다. 여기서는 JPA의 구현체인 Hibernate라는 라이브러리를 사용하여 Java에서 Postgresql 사이에 데이터를 교환하여 보겠습니다. ORM은 Spring Framework와 독립적으로 구성할 수 있지만 튜토리얼에서는 간편한 설정을 통해 보다 핵심적인 내용에 집중하기 위해 Spring Boot와 Gradle를 사용하겠습니다.
+일반적으로 프로그램의 메모리상에 존재하는 데이터는 휘발성입니다. 데이터를 상시적으로 활용할 수 있는 영속성을 부여하려면 파일 또는 데이터베이스를 사용하여 관리합니다. Java에서 객체(**O**bject) 형태로 관리하고 있는 데이터를 관계형 데이터베이스(**R**elational database)에서 관리하려면, 객체 데이터를 DB에서 요구하는 형식에 맞게 변환(**M**apping)하는 과정이 필요합니다. 이것을 ORM(Object-Relational Mapping)이라고 합니다. JPA(Java Persistent API)는 ORM기술에 대한 API 표준 명세입니다. 여기서는 JPA의 구현체인 Hibernate라는 라이브러리를 사용하여 Java에서 Postgresql 사이에 데이터를 교환(입출력)하여 보겠습니다. ORM은 Spring Framework와 독립적으로 구성할 수 있지만 튜토리얼에서는 간편한 설정을 통해 보다 핵심적인 내용에 집중하기 위해 Spring Boot와 Gradle를 사용하겠습니다.
 <br/><br/><br/>
 # 프로젝트 세팅
 라이브러리 의존성 관리를 위해 gradle(6.4.1)을 사용하였습니다. 다음과 같이 설정합니다.
@@ -145,8 +145,8 @@ Institution 클래스에서는 Person 클래스와 반대로 @OneToMany Annotati
 @ToString.Exclude 는 ToString으로 출력시 Person과 Institution 사이의 순환참조를 방지하기 위해 추가하였습니다.
 
 <br/><br/><br/>
-# 삽입, 삭제
-삽입과 삭제 튜토리얼을 위해 다음과 같이 적절한 클래스를 하나 생성하였습니다.
+# 입출력
+입출력 튜토리얼을 위해 다음과 같이 적절한 클래스를 하나 생성하였습니다.
 ```java
 package com.greencross;
 
