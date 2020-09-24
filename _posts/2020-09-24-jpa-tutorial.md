@@ -75,7 +75,7 @@ CREATE TABLE public.person
     id character varying(64) NOT NULL,
     name character varying(64),
     email character varying(64),
-    institution uuid,
+    institution uuid NOT NULL,
     CONSTRAINT "person_pkey" PRIMARY KEY (id),
     CONSTRAINT fkq7tgo7kig3jfs8un8mhsh97mp FOREIGN KEY (institution)
         REFERENCES public.institution (id) MATCH SIMPLE
@@ -136,13 +136,12 @@ public class Institution {
 	@Column
 	private String name;
 	@OneToMany(mappedBy="institution")
-	@ToString.Exclude
+	@ToString.Exclude                   // toString으로 출력시 Person과 Institution 사이의 순환참조를 방지하기 위해 추가하였습니다.
 	private List<Person> persons;
 }
 ```
 Institution 클래스에서는 Person 클래스와 반대로 @OneToMany Annotation을 사용하였습니다.
 하나의 Institution은 여러 Person에 대응되기 때문에, 필드는 컬렉션 타입으로 정의됩니다. 
-@ToString.Exclude 는 ToString으로 출력시 Person과 Institution 사이의 순환참조를 방지하기 위해 추가하였습니다.
 
 <br/><br/><br/>
 # 입출력
@@ -283,9 +282,10 @@ Hibernate:
         person persons0_ 
     where
         persons0_.institution=?
-[Person(id=sayaya1090, name=홍길동, email=sayaya@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈)), Person(id=bigluke, name=성태용, email=sungty@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈))]
+[Person(id=sayaya1090, name=홍길동, email=sayaya@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈)), 
+ Person(id=bigluke, name=성태용, email=sungty@gccorp.com, institution=Institution(id=9145dc43-5a6f-468d-9f32-943632d9292e, name=GC녹십자지놈))]
 ```
 
-inst.persons() 함수를 호출하면 매핑된 정보에 따라 person 목록을 select 하는 쿼리가 수행되고 각각의 Row가 Person 클래스에 매핑되는 것을 확인할 수 있습니다.
+inst.persons() 함수를 호출하면 매핑된 정보에 따라 GC녹십자지놈의 person 목록을 select 하는 쿼리가 수행되고 각각의 Row가 Person 클래스에 매핑되는 것을 확인할 수 있습니다.
 
 이상으로 튜토리얼을 마칩니다.
