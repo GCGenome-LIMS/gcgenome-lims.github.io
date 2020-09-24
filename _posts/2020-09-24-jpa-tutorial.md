@@ -113,7 +113,7 @@ public class Person {
 }
 ```
 Person 클래스에서 @ManyToOne과 @JoinColumn Annotation을 사용하여 Person 테이블의 institution 필드가 Institution 클래스의 id 필드와 FK 관계임을 표시하였습니다.
-lombok 라이브러리를 사용하여 setter와 getter는 자동 생성되도록 하였습니다.
+lombok 라이브러리를 사용하여 setter와 getter, toString 함수는 자동 생성되도록 하였습니다.
 
 ```
 package com.greencross.entity;
@@ -137,7 +137,7 @@ public class Institution {
 	@Column
 	private String name;
 	@OneToMany(mappedBy="institution")
-    @ToString.Exclude
+	@ToString.Exclude
 	private List<Person> persons;
 }
 ```
@@ -166,7 +166,7 @@ public class Tutorial {
 		this.em = em;
 	}
 
-    @Transactional
+	@Transactional
 	public void insert() {
 		Institution inst = new Institution().id(UUID.fromString("9145dc43-5a6f-468d-9f32-943632d9292e")).name("GC녹십자지놈");
 		inst = em.merge(inst);
@@ -175,7 +175,7 @@ public class Tutorial {
 		Person person2 = new Person().id("bigluke").name("성태용").email("sungty@gccorp.com").institution(inst);
 		em.merge(person2);
 	}
-    @Transactional(readOnly=true)
+	@Transactional(readOnly=true)
 	public void read() {
 		Institution inst = em.find(Institution.class, UUID.fromString("9145dc43-5a6f-468d-9f32-943632d9292e"));
 		System.out.println(inst);
