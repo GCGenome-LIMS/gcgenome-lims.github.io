@@ -30,7 +30,6 @@ repositories {
 }
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.postgresql:postgresql')
     implementation('org.projectlombok:lombok:1.18.12')              // Setter, Getter 자동 생성을 위해 lombok 라이브러리를 추가하였습니다.
