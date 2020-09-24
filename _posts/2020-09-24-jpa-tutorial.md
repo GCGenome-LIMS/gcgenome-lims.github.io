@@ -68,14 +68,14 @@ institution 테이블과 person 테이블이 있고, 각각 적절한 id가 부�
 CREATE TABLE public.institution
 (
     id uuid NOT NULL,
-    name character varying(64) COLLATE pg_catalog."default",
+    name character varying(64),
     CONSTRAINT "Institution_pkey" PRIMARY KEY (id)
 );
 CREATE TABLE public.person
 (
-    id character varying(64) COLLATE pg_catalog."default" NOT NULL,
-    name character varying(64) COLLATE pg_catalog."default",
-    email character varying(64) COLLATE pg_catalog."default",
+    id character varying(64) NOT NULL,
+    name character varying(64),
+    email character varying(64),
     institution uuid,
     CONSTRAINT "person_pkey" PRIMARY KEY (id),
     CONSTRAINT fkq7tgo7kig3jfs8un8mhsh97mp FOREIGN KEY (institution)
