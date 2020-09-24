@@ -8,6 +8,8 @@ baseurl: ''
 url: 'https://gcgenome-lims.github.io'
 twitter_username: ''
 github_username: ''
+markdown: kramdown
+highlighter: rouge
 plugins:
   - jekyll-feed
   - jekyll-paginate

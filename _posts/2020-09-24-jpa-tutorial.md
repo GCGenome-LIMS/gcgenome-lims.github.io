@@ -15,7 +15,7 @@ Requires: Java, Database, Spring Boot, Gradle
 <br/><br/><br/>
 # 프로젝트 세팅
 라이브러리 의존성 관리를 위해 gradle(6.4.1)을 사용하였습니다. 다음과 같이 설정합니다.
-```
+```groovy
 plugins {
     id 'org.springframework.boot' version '2.3.4.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
@@ -38,7 +38,7 @@ dependencies {
 ```
 
 그리고 데이터베이스 접속 설정을 위해 application.properties를 아래와 같이 입력합니다.
-```
+```properties
 # -----------------------
 # POSTGRESQL DATABASE CONFIGURATION
 # -----------------------
@@ -63,7 +63,7 @@ spring.jpa.properties.hibernate.format_sql=true
 
 institution 테이블과 person 테이블이 있고, 각각 적절한 id가 부여되어 있으며, person 테이블의 institution 필드가 institution 테이블의 id로 FK가 연결된 One to Many 구조입니다.
 다음 쿼리를 사용하여 테이블을 구성할 수 있습니다.
-```
+```sql
 CREATE TABLE public.institution
 (
     id uuid NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE public.person
 # 테이블 매핑
 아래와 같이 각각의 테이블과 1:1 대응되는 2개의 클래스를 생성합니다.
 
-```
+```java
 package com.greencross.entity;
 
 import lombok.Data;
@@ -114,7 +114,7 @@ public class Person {
 Person 클래스에서 @ManyToOne과 @JoinColumn Annotation을 사용하여 Person 테이블의 institution 필드가 Institution 클래스의 id 필드와 FK 관계임을 표시하였습니다.
 lombok 라이브러리를 사용하여 setter와 getter, toString 함수는 자동 생성되도록 하였습니다.
 
-```
+```java
 package com.greencross.entity;
 
 import lombok.Data;
@@ -147,7 +147,7 @@ Institution 클래스에서는 Person 클래스와 반대로 @OneToMany Annotati
 <br/><br/><br/>
 # 삽입, 삭제
 삽입과 삭제 튜토리얼을 위해 다음과 같이 적절한 클래스를 하나 생성하였습니다.
-```
+```java
 package com.greencross;
 
 import com.greencross.entity.Institution;
@@ -188,7 +188,7 @@ EntityManager의 merge 함수는 데이터베이스에 저장한 다음 저장�
 @Transactional Annotation은 트랜잭션 범위를 나타냅니다. 함수 시작 전에 트랜잭션이 시작되고, 함수가 끝나면 Commit됩니다. 
 
 다음과 같이 Spring boot 어플리케이션 시동 후 Tutorial의 insert와 read 함수를 한번씩 호출하였습니다.
-```
+```java
 package com.greencross;
 
 import org.springframework.boot.SpringApplication;
