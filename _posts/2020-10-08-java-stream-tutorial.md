@@ -1,17 +1,17 @@
 ---
 layout: post
-title: "[Tutorial] JAVA8 Stream"
+title: "[Technical reference] JAVA11 Stream"
 date:   2020-10-08
 categories:
 author: bigluke
 ---
 
 ```
-Requires: Java 8 ~ Java{New Version}
+Requires: Java 11
 ```
 
 # Stream
-자바 8에서 추가한 Stream는 람다를 활용할 수 있는 기술 중 아나입니다. 자바 8 이전에는 배열 또는 컬렉션 인스턴스를 다루는 방법은 for 또는 foreach 문을 돌면서 요소 하나씩을 꺼내서 다루는 바법이었습니다. 간단한 경우라면 상관없지남 로직이 복잡해질수록 코드의 양이 많아져 여러 로직이 섞이게 되고, 메소드를 나눌 경우 루프를 여러 번 도는 경우가 발생합니다.
+자바 8에서 추가한 Stream는 람다를 활용할 수 있는 기술 중 하나입니다. 자바 8 이전에는 배열 또는 컬렉션 인스턴스를 다루는 방법은 for 또는 foreach 문을 돌면서 요소 하나씩을 꺼내서 다루는 방법이었습니다. 간단한 경우라면 상관없지만 로직이 복잡해질수록 코드의 양이 많아져 여러 로직이 섞이게 되고, 메소드를 나눌 경우 루프를 여러 번 도는 경우가 발생합니다.
 Stream은 배열 또는 컬렉션 인스턴스에 함수 여러 개를 조합해서 원하는 결과를 필터링하고 가공된 결과를 얻을 수 있습니다. 또한 람다를 이용해서 코드의 양을 줄이고 간결하게 표현할 수 있습니다. 즉, 배역과 컬렉션을 함수형으로 처리할 수 있습니다.
 
 # Stream 생성
@@ -58,7 +58,7 @@ HONG
 ```
 
 # Flatmap
-Flatmap은 Array, Object로 구성된 모든 원소를 단일 원소 스트림으로 반환할 수 있습니다.
+Flatmap은 Stream 내 요소를 단일 Stream 요소로 반환할 수 있습니다.
 ```groovy
 List<List<String>> list = 
   Arrays.asList(Arrays.asList("Sung", "Kim", "Hong"),
@@ -125,5 +125,3 @@ HTML
 CSS
 C
 ```
-
-# Stream 응용
