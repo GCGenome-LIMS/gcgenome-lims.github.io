@@ -32,3 +32,19 @@ OpenProject는 다음 세 가지 방법으로 설정할 수 있습니다.
 
 
 # CentOS 8에 OpenProject 11.0.0 설치
+OpenProject 패키지 소스를 추가합니다.
+```
+sudo wget -O /etc/yum.repos.d/openproject.repo \
+  https://dl.packager.io/srv/opf/openproject/stable/11/installer/el/8.repo
+```
+
+OpenProject 패키지를 다운로드 합니다.
+```
+sudo yum install openproject
+```
+참고: 패키지 epel-release를 찾을 수 없어 패키지 관리자가 OpenProject 설치를 거부하는 경우 EPEL 저장소를 수동으로 추가 한 다음
+위의 명령을 다시 실행해야 합니다.
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+sudo yum install openproject
+```
