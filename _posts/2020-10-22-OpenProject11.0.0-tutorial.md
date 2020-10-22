@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Tutorial] OpenProject 11.0.0 튜토리얼"
+title: "[Tutorial] OpenProject 11.0.0 설치 튜토리얼"
 date:   2020-10-22
 categories:
 tags: post
@@ -20,10 +20,13 @@ OpenProject를 사용하면 초기 프로젝트 아이디어부터 프로젝트 
 # OpenProject 설치
 OpenProject는 다음 세 가지 방법으로 설정할 수 있습니다.
 
-DEB/RPM 패키지로 설치              : OpenProject를 설치하는 데 권장되는 방법입니다.
-Docker로 설치                      : 이를 통해 Docker를 사용하여 격리 된 방식으로 OpenProject를 설정할 수 있습니다.
-Univention Corporate Server로 설치 : OpenProject는 App Center에서 사용할 수 있으며 ID관리와 통합됩니다.
-다른                               : Kubernetes와 같은 특정 플랫폼에 OpenProject를 설치하는 방법입니다.
+|설치|방법|
+|------|---|
+|DEB/RPM 패키지로 설치|OpenProject를 설치하는 데 권장되는 방법입니다.|
+|Docker로 설치|이를 통해 Docker를 사용하여 격리 된 방식으로 OpenProject를 설정할 수 있습니다.|
+|Univention Corporate Server로 설치|OpenProject는 App Center에서 사용할 수 있으며 ID관리와 통합됩니다.|
+|다른|Kubernetes와 같은 특정 플랫폼에 OpenProject를 설치하는 방법입니다.|
+
 
 이 튜토리얼에서는 DEB/RPM 패키지로 설치하는 방법에 대해 설명합니다.
 
