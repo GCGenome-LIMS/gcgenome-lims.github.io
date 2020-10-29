@@ -145,3 +145,17 @@ public void search() {
 ![img3](/assets/img/2020-10-29-jpa-search-img3.PNG)
 
 # Criteria API를 사용하여 검색
+```java
+@Transactional(readOnly = true)
+public void search() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<Person> q = cb.createQuery(Person.class);
+	Root<Person> c = q.from(Person.class);
+	q.where(cb.and(cb.equal(c.get("institution").get("name"), "GCGenome"),
+				   cb.equal(c.get("role"), "MANAGER")))
+	 .select(c);
+	em.createQuery(q).getResultList().forEach(System.out::println);
+}
+```
+
+![img5](/assets/img/2020-10-29-jpa-search-img5.PNG)
