@@ -46,6 +46,8 @@ AND P.role='MANAGER';
 
 다음과 같이 작성하여 Repository interface를 작성합니다. 
 ```java
+package com.greencross.repo;
+
 import com.greencross.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -62,7 +64,9 @@ public interface PersonRepo extends JpaRepository<Person, String> {
 
 @Query를 사용하여 작성하는 SQL은 표준 SQL이 아닌, 보다 객체지향적 구문을 사용하는 JSQL이라는 규칙에 의해 작성합니다. 
 p라는 alias를 사용하여 Person의 객체를 지칭하고 있습니다. 
+
 파라메터는 ?1, ?2... 으로 생성하였는데, 메서드 파라메터가 순번에 맞게 삽입됩니다.
+
 Entity의 필드가 FK로 참조하고 있는 다른 Entity field를 검색 조건에 사용할 때에는, dot(.)연산자를 사용합니다.
 위에서는 institution.name로 Person의 참조 테이블 institution의 name 필드를 검색에 활용하고 있습니다.
 
@@ -76,9 +80,68 @@ private final PersonRepo repo;
 	}
 ```
 ![img2](/assets/img/2020-10-29-jpa-search-img2.PNG)
+
 표준 SQL이 생성되어 실행됨을 확인할 수 있습니다.
 
  
 # @Where를 사용하여 검색
+두 번째 방법은, 부모 entity를 이미 
+
+```java
+package com.greencross.entity;
+
+import lombok.Data;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.Where;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+@Table(name="Institution")
+@Data
+@Accessors(fluent = true)
+public class Institution {
+	@Id
+	private UUID id;
+	@Column
+	private String name;
+	@OneToMany(mappedBy="institution")
+	@ToString.Exclude
+	@Where(clause="role='MANAGER'")
+	private List<Person> managers;
+}
+
+```
+
+```java
+package com.greencross.repo;
+
+import com.greencross.entity.Institution;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public interface InstitutionRepo extends JpaRepository<Institution, UUID> {
+	Optional<Institution> findByName(String name);
+}
+
+```
+
+```java
+private final InstitutionRepo repo;
+@Transactional(readOnly = true)
+public void search() {
+	repo.findByName("GCGenome").map(Institution::managers)
+		.ifPresent(list->list.stream().forEach(System.out::println));
+}
+```
+
+![img3](/assets/img/2020-10-29-jpa-search-img3.PNG)
 
 # Criteria API를 사용하여 검색
