@@ -152,7 +152,7 @@ public void search() {
 	CriteriaQuery<Person> q = cb.createQuery(Person.class);
 	Root<Person> c = q.from(Person.class);
 	q.where(cb.and(cb.equal(c.get("institution").get("name"), "GCGenome"),
-				   cb.equal(c.get("role"), "MANAGER")))
+		       cb.equal(c.get("role"), "MANAGER")))
 	 .select(c);
 	em.createQuery(q).getResultList().forEach(System.out::println);
 }
