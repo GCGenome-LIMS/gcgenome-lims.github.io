@@ -62,7 +62,7 @@ public interface PersonRepo extends JpaRepository<Person, String> {
 }
 ```
 
-@Query를 사용하여 작성하는 SQL은 표준 SQL이 아닌, 보다 객체지향적 구문을 사용하는 JSQL이라는 규칙에 의해 작성합니다. 
+@Query를 사용하여 작성하는 SQL은 표준 SQL이 아닌, 보다 객체지향적 구문을 사용하는 JPQL이라는 규칙에 의해 작성합니다. 
 p라는 alias를 사용하여 Person의 객체를 지칭하고 있습니다. 
 
 파라메터는 ?1, ?2... 으로 생성하였는데, 메서드 파라메터가 순번에 맞게 삽입됩니다.
@@ -85,7 +85,30 @@ private final PersonRepo repo;
 
  
 # @Where를 사용하여 검색
-두 번째 방법은, 부모 entity를 이미 
+두 번째는 Entity에 직접 매핑된 컬렉션 필드를 필터링하는 @Where annotation을 사용하는 방법입니다.
+
+entity의 필드를 조회해야 하므로 우선 기관명이 GCGenome인 Institution을 획득해 보겠습니다.
+
+다음과 같이 Repository를 생성합니다. 아래와 같이 @Query annotation 없이 메서드가 선언된 인터페이스만 작성해도 JPA가 메서드 선언대로 행동하는 구현 객체를 동적으로 생성하여 빈으로 등록합니다.
+```java
+package com.greencross.repo;
+
+import com.greencross.entity.Institution;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public interface InstitutionRepo extends JpaRepository<Institution, UUID> {
+	Optional<Institution> findByName(String name);
+}
+
+```
+
+그럼 이제 매핑된 필드를 필터링해 보겠습니다. 다음과 같이 @Where annotation의 clause에, WHERE 절 내용을 입력합니다.
+
 
 ```java
 package com.greencross.entity;
@@ -116,22 +139,7 @@ public class Institution {
 
 ```
 
-```java
-package com.greencross.repo;
-
-import com.greencross.entity.Institution;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
-import java.util.UUID;
-
-@Repository
-public interface InstitutionRepo extends JpaRepository<Institution, UUID> {
-	Optional<Institution> findByName(String name);
-}
-
-```
+다음과 같은 코드를 작성하여 결과를 테스트 해 보겠습니다.
 
 ```java
 private final InstitutionRepo repo;
@@ -143,6 +151,11 @@ public void search() {
 ```
 
 ![img3](/assets/img/2020-10-29-jpa-search-img3.PNG)
+
+먼저 repo.findByName("GCGenome") 에서 기관명이 GCGenome인 Institution Entity instance를 검색하였습니다. 
+그리고 institution의 managers 메서드를 호출하여 Manager 목록을 조회하였습니다.
+
+이 방법은 자식 entity가 polymorphic하게 구현되었을 때, 각각의 타입을 지정하여 조회하는 데 유용하게 사용할 수 있습니다.
 
 # Criteria API를 사용하여 검색
 ```java
