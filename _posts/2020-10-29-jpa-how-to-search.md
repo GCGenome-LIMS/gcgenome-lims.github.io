@@ -158,17 +158,31 @@ public void search() {
 이 방법은 자식 entity가 polymorphic하게 구현되었을 때, 각각의 타입을 지정하여 조회하는 데 유용하게 사용할 수 있습니다.
 
 # Criteria API를 사용하여 검색
+
+다음은 JPA에서 제공하는 동적 쿼리 생성 API인 Criteria API를 사용하여 쿼리를 작성해 보겠습니다.
+
 ```java
 @Transactional(readOnly = true)
 public void search() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<Person> q = cb.createQuery(Person.class);
-	Root<Person> c = q.from(Person.class);
-	q.where(cb.and(cb.equal(c.get("institution").get("name"), "GCGenome"),
+	CriteriaBuilder cb = em.getCriteriaBuilder();                            // 1]
+	CriteriaQuery<Person> q = cb.createQuery(Person.class);                  // 2]
+	Root<Person> c = q.from(Person.class);                                   // 3]
+	q.where(cb.and(cb.equal(c.get("institution").get("name"), "GCGenome"),   // 4]
 		       cb.equal(c.get("role"), "MANAGER")))
-	 .select(c);
-	em.createQuery(q).getResultList().forEach(System.out::println);
+	 .select(c);                                                             // 5]
+	em.createQuery(q).getResultList().forEach(System.out::println);          // 6]
 }
 ```
 
+1. EntityManager를 통해 CriteriaBuilder 인스턴스를 획득합니다.
+2. Query의 반환 타입을 지정하여 CriteriaQuery 인스턴스를 생성합니다.
+3. 검색 대상 Entity 타입을 지정하였습니다(FROM 절에 해당).
+4. 검색 대상 Entity의 필드 및 검색 조건을 지정하여 Predicate 객체(WHERE 절의 각 검색 조건에 해당)를 생성하였습니다. 그리고 그것을 AND 하여 CriteriaQuery에 주입하였습니다.
+5. 검색 Projection 범위를 지정합니다. 여기서는 검색 대상인 Entity 전부를 지정하였습니다.
+6. 생성한 쿼리를 실행하고 결과를 출력하였습니다.
+
+결과는 아래와 같습니다.
 ![img5](/assets/img/2020-10-29-jpa-search-img5.PNG)
+
+문자열로 작성된 쿼리를 사용하거나 Entity 매핑을 이용하는 방식은 검색 조건을 추가하거나, 검색 범위를 변경하는 등 유연한 검색이 어렵습니다.
+Criteria API를 사용하면 쿼리를 동적으로 생성함으로써 상황에 맞는 유연한 검색이 가능합니다.
