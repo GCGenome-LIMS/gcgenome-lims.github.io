@@ -6,7 +6,7 @@ categories:
 author: bigluke
 ---
 
-# Requuires
+# Prerequisites
 Tutorial을 시작하기 전에 기본 JAVA 프로그래밍 개념에 대해 이미 알고 있다고 가정합니다.
 JAVA 개념에 대해 잘 모른다면 JAVA 프로그래밍에 대한 자습서를 살펴볼 것을 권장합니다.
 
@@ -15,14 +15,14 @@ JAVA 개념에 대해 잘 모른다면 JAVA 프로그래밍에 대한 자습서�
 본 블로그 Tutorial에서는 병원에서 암종별 처방을 자동화하는 시스템을 Strategy 패턴을 활용하여 코드를 구현해 보겠습니다.
 
 
-처방 인터페이스를 만듭니다.
+암종 인터페이스를 만듭니다.
 ```groovy
 public interface Cancer {
   public void medicine();
 }
 ```
 
-동일한 인터페이스를 구현하는 구체적인 클래스를 만듭니다.
+처방 인터페이스를 구현하는 구체적인 암종별 클래스를 만듭니다.
 ```groovy
 public class LiverCancer implements Cancer{
   @Override
