@@ -7,7 +7,7 @@ author: bigluke
 ---
 
 # Requuires
-Tutorial을 시작하기 전에 기본 JAVA 프로그래밍 개념에 애해 이미 알고 있다고 가정합니다.
+Tutorial을 시작하기 전에 기본 JAVA 프로그래밍 개념에 대해 이미 알고 있다고 가정합니다.
 JAVA 개념에 대해 잘 모른다면 JAVA 프로그래밍에 대한 자습서를 살펴볼 것을 권장합니다.
 
 # Software design patter - Strategy
@@ -32,7 +32,6 @@ public class LiverCancer implements Cancer{
 }
 ```
 
-동일한 인터페이스를 구현하는 구체적인 클래스를 만듭니다.
 ```groovy
 public class LungCancer implements Cancer{
   @Override
@@ -57,7 +56,7 @@ public class Prescription{
 }
 ```
 
-Presctiption을 사용하여 Cancer를 변경할 때 동작의 변화를 확인 합니다.
+Presctiption을 사용하여 암종을 변경할 때 동작의 변화를 확인 합니다.
 ```groovy
 public class Main{
   public static void main(String[] args) {
