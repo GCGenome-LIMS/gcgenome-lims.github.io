@@ -89,6 +89,6 @@ Prescription클래스의 medicine함수가 호출되면 아래와 같이 등록�
 ```
 
 
-
+이상으로 Strategy Pattern 튜토리얼을 마칩니다.
 
 
