@@ -60,7 +60,7 @@ public class Prescription {
 	public void setCancer(Cancer cancer){
 		this.cancer = cancer;
 	}
-	public void medicine(){
+	public void result(){
 		cancer.medicine();
 	}
 }
