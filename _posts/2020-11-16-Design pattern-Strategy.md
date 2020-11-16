@@ -16,8 +16,9 @@ JAVA 개념에 대해 잘 모른다면 JAVA 프로그래밍에 대한 자습서�
 
 
 # Tutorial
-간암(LiverCancer)와 폐암(LungCancer) 클래스가 있고, 이 두 클래스는 Cancer 인터페이스를 구현하겠습니다.
-그리고 LiverCancer와 LungCancer 객체를 사용하는 처방(Prescription)도 구현하겠습니다.
+  * 간암(LiverCancer)와 폐암(LungCancer) 클래스 구현  
+  * 추상적인 접근점 암종(Cancer) 인터페이스 구현  
+  * LiverCancer와 LungCancer 객체를 사용하는 처방(Prescription) 구현  
 ![img1](/assets/img/2020-11-16-strategy-tutorial-img1.png)
 
 
