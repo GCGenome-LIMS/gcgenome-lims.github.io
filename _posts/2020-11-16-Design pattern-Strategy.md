@@ -73,10 +73,10 @@ public class Main {
 		Prescription prescription = new Prescription();
 
 		prescription.setCancer(new LiverCancer());
-		prescription.medicine();
+		prescription.result();
 
 		prescription.setCancer(new LungCancer());
-		prescription.medicine();
+		prescription.result();
 
 	}
 }
