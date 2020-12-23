@@ -39,7 +39,6 @@ docker stop openproject
 docker start openproject
 
 
-
 4. migration 확인
 
 ![img6](/assets/img/2020-12-24-OpenProject-how-to-data-migration-img6.png)
