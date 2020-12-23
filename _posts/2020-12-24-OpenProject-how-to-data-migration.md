@@ -27,6 +27,7 @@ Docker 개념에 대해 잘 모른다면 Docker에 대한 자습서를 살펴볼
 ![img3](/assets/img/2020-12-24-OpenProject-how-to-data-migration-img3.png)
 
 
+
 3. Docker로 OpenProject를 설치합니다.
 - 다음 명령을 사용하여 컨테이너가 다시 시작될 때 데이터가 저장 될 로컬 디렉토리를 만들고 해당 디렉토리가 마운트 된 상태로 컨테이너를 시작할 수 있습니다.
 ex) /data/openproject/opdata : 모든 데이터가 저장 될 디렉토리
