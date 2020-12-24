@@ -17,7 +17,7 @@ Docker 개념에 대해 잘 모른다면 Docker에 대한 자습서를 살펴볼
 1. NAS서버에서 openproject data 확인합니다.
 
  ![img1](/assets/img/2020-12-24-OpenProject-how-to-data-migration-img1.png)  
- → /volume1/OpenProject/var/lib/openproject에서 pgdata 와 static을 migration 예정
+ → /volume1/OpenProject/var/lib/openproject에서 pgdata 와 static을 migration 
 
 
 2. scp를 사용하여 virgo서버의 /data/openproject/opdata로 이동
